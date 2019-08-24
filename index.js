@@ -5,13 +5,16 @@ const Models = require('./model.js');
 const morgan= require('morgan');
 const validator= require('express-validator');
 const bodyParser= require('body-parser');
+const cors = require('cors');
 
 
 const app= express();
+app.use(cors());
 app.use(bodyParser.json());
 
 app.use(express.static('public'));
 app.use(morgan('common'));
+
 
 const Friend= Models.Friend;
 mongoose.connect('mongodb+srv://myFlixDBadmin:samkorea@cluster0-u54mz.mongodb.net/contactDB?retryWrites=true',{useNewUrlParser: true});
