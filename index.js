@@ -16,6 +16,11 @@ app.use(morgan('common'));
 const Friend= Models.Friend;
 mongoose.connect('mongodb+srv://myFlixDBadmin:samkorea@cluster0-u54mz.mongodb.net/contactDB?retryWrites=true',{useNewUrlParser: true});
 
+app.get('/',(req,res)=>
+{
+  res.send("My Contact List");
+});
+
 //showing all the contacts
 app.get('/friends', function(req,res)
 {
