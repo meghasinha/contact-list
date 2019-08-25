@@ -86,7 +86,8 @@ app.post('/friends', function(req, res) {
         FirstName: req.body.FirstName,
         LastName: req.body.LastName,
         Email: req.body.Email,
-        Phone: req.body.Phone
+        Phone: req.body.Phone,
+        Photo: req.body.Photo
       })
       .then(function(friends) {res.status(201).json(friends) })
       .catch(function(error) {
