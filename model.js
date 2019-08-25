@@ -5,8 +5,8 @@ var friendSchema=  mongoose.Schema({
   FirstName: {type: String, required: true},
   LastName: { type: String, required: true},
   Email: { type: String, required: true},
-  Phone:{type: Number} ,
-  Photo: String
+  Phone:{type: String} ,
+  Photo: {type: String}
 });
 
 var Friend = mongoose.model('Friend', friendSchema);
