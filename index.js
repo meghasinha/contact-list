@@ -6,6 +6,7 @@ const morgan= require('morgan');
 const validator= require('express-validator');
 const bodyParser= require('body-parser');
 const cors = require('cors');
+const multer = require('multer');
 
 const app= express();
 app.use(cors());
