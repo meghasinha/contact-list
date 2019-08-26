@@ -7,6 +7,7 @@ const validator= require('express-validator');
 const bodyParser= require('body-parser');
 const cors = require('cors');
 const multer = require('multer');
+var upload = multer({ storage: storage });
 
 const storgae = multer.diskStorage({
   destination: function(req, file, cb) {
@@ -18,7 +19,6 @@ const storgae = multer.diskStorage({
   }
 });
 
-var upload = multer({ storage: storage });
 
 const app= express();
 app.use(cors());
