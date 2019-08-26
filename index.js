@@ -89,7 +89,7 @@ app.post('/friends', upload.single('Image'),function(req, res) {
         LastName: req.body.LastName,
         Email: req.body.Email,
         Phone: req.body.Phone,
-        Photo: req.body.Photo
+        Photo: req.file.originalname
       })
       .then(function(friends) {res.status(201).json(friends) })
       .catch(function(error) {
