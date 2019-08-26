@@ -7,6 +7,7 @@ const validator= require('express-validator');
 const bodyParser= require('body-parser');
 const cors = require('cors');
 const multer = require('multer');
+var path = require('path');
 
 const storage = multer.diskStorage({
   destination: function(req, file, cb) {
