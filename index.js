@@ -6,12 +6,13 @@ const morgan= require('morgan');
 const validator= require('express-validator');
 const bodyParser= require('body-parser');
 const cors = require('cors');
+var multer  = require('multer')
+var upload = multer({ dest: 'images/' })
 
 
 const app= express();
 app.use(cors());
 app.use(bodyParser.json());
-app.use(fileupload());
 
 app.use(express.static('public'));
 app.use(morgan('common'));
@@ -85,19 +86,7 @@ app.post('/friends', function(req, res) {
       return res.status(400).send(req.body.FirstName + "already exists");
     } else {
       if(req.files==null) {
-        file = null;
         return res.status(400).json({msg: "no file is uploaded"});
-      }
-      else {
-            file.mv(`/images/${file.name}`, err =>{
-              if(err)
-              {
-                file = null;
-                consoloe.error(err);
-                res.status(500).send("Error:"+ error);
-              }
-              res.json({filename:file.name,filepath:`/images/${file.name}`});
-            });
       }
     Friend
       .create({
