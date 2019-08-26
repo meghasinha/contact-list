@@ -7,6 +7,7 @@ const validator= require('express-validator');
 const bodyParser= require('body-parser');
 const cors = require('cors');
 const multer = require('multer');
+var upload = multer({ dest: 'images/' });
 
 const app= express();
 app.use(cors());
@@ -75,7 +76,8 @@ app.put('/friends/:FirstName', function(req, res) {
 });
 
 //creating new contact
-app.post('/friends', function(req, res) {
+app.post('/friends', upload.single('Image'),function(req, res) {
+  console.log(req.file);
   Friend.findOne({ FirstName : req.body.FirstName })
   .then(function(friends) {
     if (friends) {
