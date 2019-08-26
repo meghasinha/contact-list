@@ -6,8 +6,17 @@ const morgan= require('morgan');
 const validator= require('express-validator');
 const bodyParser= require('body-parser');
 const cors = require('cors');
+const storgae = multer.diskStorage({
+  destination: function(req, file, cb) {
+    let path = `${process.env.PUBLIC_URL}/images/`;
+    cb(null, path);
+  },
+  filename: function(req, file, cb) {
+    cb(null, file.originalname);
+  }
+});
 const multer = require('multer');
-var upload = multer({ dest: 'images/' });
+var upload = multer({ storage: storage });
 
 const app= express();
 app.use(cors());
