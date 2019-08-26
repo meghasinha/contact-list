@@ -11,12 +11,14 @@ const cors = require('cors');
 const app= express();
 app.use(cors());
 app.use(bodyParser.json());
+app.use(fileupload());
 
 app.use(express.static('public'));
 app.use(morgan('common'));
 
 
 const Friend= Models.Friend;
+
 mongoose.connect('mongodb+srv://myFlixDBadmin:samkorea@cluster0-u54mz.mongodb.net/contactDB?retryWrites=true',{useNewUrlParser: true});
 
 app.get('/',(req,res)=>
@@ -76,18 +78,34 @@ app.put('/friends/:FirstName', function(req, res) {
 
 //creating new contact
 app.post('/friends', function(req, res) {
+  let file= req.files.file;
   Friend.findOne({ FirstName : req.body.FirstName })
   .then(function(friends) {
     if (friends) {
       return res.status(400).send(req.body.FirstName + "already exists");
     } else {
+      if(req.files==null) {
+        file = null;
+        return res.status(400).json({msg: "no file is uploaded"});
+      }
+      else {
+            file.mv(`/images/${file.name}`, err =>{
+              if(err)
+              {
+                file = null;
+                consoloe.error(err);
+                res.status(500).send("Error:"+ error);
+              }
+              res.json({filename:file.name,filepath:`/images/${file.name}`});
+            });
+      }
     Friend
       .create({
         FirstName: req.body.FirstName,
         LastName: req.body.LastName,
         Email: req.body.Email,
         Phone: req.body.Phone,
-        Photo: req.body.Photo
+        Photo: file.name
       })
       .then(function(friends) {res.status(201).json(friends) })
       .catch(function(error) {
@@ -100,6 +118,24 @@ app.post('/friends', function(req, res) {
     res.status(500).send("Error: " + error);
   });
 });
+
+
+/*
+app.post('/upload',(req,res) => {
+  if(req.files==null) {
+    return res.status(400).json({msg: "no file is uploaded"});
+  }
+  const file= req.files.file;
+  file.mv(`/images/${file.name}`, err =>{
+    if(err)
+    {
+      consoloe.error(err);
+      res.status(500).send("Error:"+ error);
+    }
+    res.json({filename:file.name,filepath:`/images/${file.name}`});
+  });
+});
+*/
 
 var port = process.env.PORT || 3000;
 app.listen(port, "0.0.0.0", function() {
