@@ -6,8 +6,6 @@ const morgan= require('morgan');
 const validator= require('express-validator');
 const bodyParser= require('body-parser');
 const cors = require('cors');
-var multer  = require('multer');
-var upload = multer({ dest: 'images/' });
 
 const app= express();
 app.use(cors());
