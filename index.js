@@ -14,8 +14,8 @@ app.use(bodyParser.json());
 
 app.use(express.static('public'));
 app.use(morgan('common'));
-
-/*const storage = multer.diskStorage({
+/*
+const storage = multer.diskStorage({
   destination: function(req, file, cb) {
     let dest =  path.join(__dirname, '`public/images/`');
     cb(null, dest);
@@ -23,8 +23,8 @@ app.use(morgan('common'));
   filename: function(req, file, cb) {
     cb(null, file.originalname);
   }
-});
-*/
+});*/
+
 var upload = multer({ dest: 'public/images/' });
 
 const Friend= Models.Friend;
@@ -52,7 +52,7 @@ app.get('/friends', function(req,res)
 //deleting the contact
 app.delete('/friends/:FirstName', function(req, res) {
   Friend.findOneAndRemove({ FirstName: req.params.FirstName })
-  .then(function(fiends) {
+  .then(function(friends) {
     if (!friends) {
       res.status(400).send(req.params.FirstName + " was not found");
     } else {
@@ -99,7 +99,7 @@ app.post('/friends', upload.single('Image'),function(req, res) {
         LastName: req.body.LastName,
         Email: req.body.Email,
         Phone: req.body.Phone,
-        Photo: req.file.originalname
+        Photo: req.file.path
       })
       .then(function(friends) {res.status(201).json(friends) })
       .catch(function(error) {
