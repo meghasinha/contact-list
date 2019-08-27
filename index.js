@@ -52,8 +52,8 @@ app.get('/friends', function(req,res)
 //deleting the contact
 app.delete('/friends/:FirstName', function(req, res) {
   Friend.findOneAndRemove({ FirstName: req.params.FirstName })
-  .then(function(user) {
-    if (!user) {
+  .then(function(fiends) {
+    if (!friends) {
       res.status(400).send(req.params.FirstName + " was not found");
     } else {
       res.status(200).send(req.params.FirstName + " was deleted.");
