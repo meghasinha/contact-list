@@ -127,7 +127,9 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname + '/client-2/build/index.html'))
 });
 
-var port = process.env.PORT || 3000;
-app.listen(port, "0.0.0.0", function() {
-console.log("Listening on Port 3000");
-});
+//environment variable port
+ var port=process.env.PORT || 3000;
+ //listen for request
+ app.listen(port, "0.0.0.0", function() {
+ console.log(`Listening on Port ${port}`);
+ });
