@@ -7,7 +7,6 @@ const validator= require('express-validator');
 const bodyParser= require('body-parser');
 const cors = require('cors');
 const multer = require('multer');
-var path = require('path');
 const app= express();
 app.use(cors());
 app.use(bodyParser.json());
@@ -113,6 +112,14 @@ app.post('/friends', upload.single('Image'),function(req, res) {
   });
 });
 
+//error handling function
+app.use(function (err, req, res, next)
+{
+  console.error(err.stack);
+  res.status(500).send('Something broke!');
+});
+
+const path = require('path')
 // Serve static files from the React frontend app
 app.use(express.static(path.join(__dirname, 'client-2/build')))
 // Anything that doesn't match the above, send back index.html
