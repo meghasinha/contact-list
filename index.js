@@ -15,13 +15,12 @@ app.use(express.static('public'));
 app.use(morgan('common'));
 
 const storage = multer.diskStorage({
-  destination: './images',
   filename: function(req, file, cb) {
     cb(null, file.originalname);
   }
 });
 
-var upload = multer({ storage: storage });
+var upload = multer({ dest: 'images/', storage: storage });
 
 const Friend= Models.Friend;
 mongoose.connect('mongodb+srv://myFlixDBadmin:samkorea@cluster0-u54mz.mongodb.net/contactDB?retryWrites=true',{useNewUrlParser: true});
