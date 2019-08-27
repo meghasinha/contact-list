@@ -15,14 +15,17 @@ app.use(bodyParser.json());
 app.use(express.static('public'));
 app.use(morgan('common'));
 
-const storage = multer.diskStorage({
-  destination: './public/images/',
+/*const storage = multer.diskStorage({
+  destination: function(req, file, cb) {
+    let dest =  path.join(__dirname, '`public/images/`');
+    cb(null, dest);
+  },
   filename: function(req, file, cb) {
     cb(null, file.originalname);
   }
 });
-
-var upload = multer({ storage: storage });
+*/
+var upload = multer({ dest: 'public/images/' });
 
 const Friend= Models.Friend;
 mongoose.connect('mongodb+srv://myFlixDBadmin:samkorea@cluster0-u54mz.mongodb.net/contactDB?retryWrites=true',{useNewUrlParser: true});
@@ -85,14 +88,6 @@ app.put('/friends/:FirstName', function(req, res) {
 //creating new contact
 app.post('/friends', upload.single('Image'),function(req, res) {
   console.log(req.file);
-  let imageName;
-  if(req.file == null)
-  {
-    imageName = 'undefined';
-  }
-  else {
-    imageName = req.file.originalname;
-  }
   Friend.findOne({ FirstName : req.body.FirstName })
   .then(function(friends) {
     if (friends) {
@@ -104,7 +99,7 @@ app.post('/friends', upload.single('Image'),function(req, res) {
         LastName: req.body.LastName,
         Email: req.body.Email,
         Phone: req.body.Phone,
-        Photo: imageName
+        Photo: req.file.originalname
       })
       .then(function(friends) {res.status(201).json(friends) })
       .catch(function(error) {
@@ -116,6 +111,13 @@ app.post('/friends', upload.single('Image'),function(req, res) {
     console.error(error);
     res.status(500).send("Error: " + error);
   });
+});
+
+// Serve static files from the React frontend app
+app.use(express.static(path.join(__dirname, 'client-2/build')))
+// Anything that doesn't match the above, send back index.html
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname + '/client-2/build/index.html'))
 });
 
 var port = process.env.PORT || 3000;
