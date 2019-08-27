@@ -16,10 +16,7 @@ app.use(express.static('public'));
 app.use(morgan('common'));
 
 const storage = multer.diskStorage({
-  destination: function(req, file, cb) {
-    let dest =  path.join(__dirname, 'public/images/');
-    cb(null, dest);
-  },
+  destination: './public/images/',
   filename: function(req, file, cb) {
     cb(null, file.originalname);
   }
@@ -99,7 +96,7 @@ app.post('/friends', upload.single('Image'),function(req, res) {
         LastName: req.body.LastName,
         Email: req.body.Email,
         Phone: req.body.Phone,
-        Photo: req.file.path
+        Photo: req.file.originalname
       })
       .then(function(friends) {res.status(201).json(friends) })
       .catch(function(error) {
