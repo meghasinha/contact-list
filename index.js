@@ -85,6 +85,14 @@ app.put('/friends/:FirstName', function(req, res) {
 //creating new contact
 app.post('/friends', upload.single('Image'),function(req, res) {
   console.log(req.file);
+  let imageName;
+  if(req.file == null)
+  {
+    imageName = 'undefined';
+  }
+  else {
+    imageName = req.file.originalname;
+  }
   Friend.findOne({ FirstName : req.body.FirstName })
   .then(function(friends) {
     if (friends) {
@@ -96,7 +104,7 @@ app.post('/friends', upload.single('Image'),function(req, res) {
         LastName: req.body.LastName,
         Email: req.body.Email,
         Phone: req.body.Phone,
-        Photo: req.file.originalname
+        Photo: imageName
       })
       .then(function(friends) {res.status(201).json(friends) })
       .catch(function(error) {
