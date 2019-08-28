@@ -14,7 +14,7 @@ export function AddcontactView(props)
   const [photo, setPhoto] =useState('');
   const [file, setFile] =useState('');
   const [filename, setFilename] =useState('Choose file');
-
+//Adding new contact
   const handleSubmit = (e) =>
   {
     e.preventDefault();
@@ -26,7 +26,6 @@ export function AddcontactView(props)
     formData.set("Email", email);
     formData.set("Phone",phone);
     formData.append('Image',file);
-
     axios.post('https://myfriendlist.herokuapp.com/friends',formData, {
        headers: {
          'Content-Type': 'multipart/form-data'
@@ -49,12 +48,11 @@ export function AddcontactView(props)
        setFilename(e.target.files[0].name);
      };
 
-     const handlecancel = (e) => {
+      const handlecancel = (e) => {
        window.open('/');
      };
 
     return (
-
       <div className="wrapper">
         <div className="contact-form1">
           <form>
@@ -69,7 +67,7 @@ export function AddcontactView(props)
             </div>
             <div>
             <Button  className="button4" variant="link" onClick={handleSubmit}>Save</Button>
-              <Button className="button4" variant="link" onClick={handlecancel}>Cancel</Button>
+            <Button className="button4" variant="link" onClick={handlecancel}>Cancel</Button>
             </div>
           </form>
         </div>

@@ -5,7 +5,7 @@ import Button from 'react-bootstrap/Button';
 import { Link } from 'react-router-dom';
 import styles from './friend-card.scss';
 export class FriendCard extends React.Component {
-
+//deleting the contact
 handleDelete = e => {
    e.preventDefault();
    let firstName = localStorage.getItem('firstname');
@@ -24,9 +24,6 @@ handleDelete = e => {
 }
 
   render() {
-    // This is given to the <MovieCard/> component by the outer world
-    // which, in this case, is `MainView`, as `MainView` is what’s
-    // connected to your database via the movies endpoint of your API
     const { friend, handleDelete  } = this.props;
    localStorage.setItem('updateContact', 0);
     return (

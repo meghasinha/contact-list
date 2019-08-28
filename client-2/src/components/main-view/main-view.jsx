@@ -50,12 +50,12 @@ export class MainView extends React.Component {
      if (newcontact == null ) return (
     <Router>
       <div className="main-view">
-      <div className= "contact">
+        <div className= "contact">
             <p className="contact1">My contact</p>
             <Button className="add2" onClick={()=>{
               this.addContact(1);
             } } variant="link"><p> <Link to={'/newContact'}>+</Link></p></Button>
-      </div>
+          </div>
       <Route path="/update/:firstname" render={({ match }) => {
           return <UpdateView/>} }/>
       {
@@ -63,9 +63,8 @@ export class MainView extends React.Component {
         <FriendCard key={friend._id} friend={friend}/>
       ))}
       </div>
-
-    </Router>
-    );
+  </Router>
+);
 return (
       <Router>
         <Route path="/newContact" render={({ match }) => {
