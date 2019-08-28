@@ -70,7 +70,7 @@ app.get('/friends', function(req,res)
   });
 });
 //deleting the contact
-app.delete('/friends/:FirstName', function(req, res) {
+app.delete('/', function(req, res) {
   Friend.findOneAndRemove({ FirstName: req.params.FirstName })
   .then(function(friends) {
     if (!friends) {
@@ -78,7 +78,8 @@ app.delete('/friends/:FirstName', function(req, res) {
     } else {
       res.status(200).send(req.params.FirstName + " was deleted.");
     }
-    fs.unlink("/"+req.params.Photo, (err) => {
+    let path = req.params.Photo;
+    fs.unlink(path, (err) => {
       if (err) throw err;
       console.log('successfully deleted /tmp/hello');
     });
