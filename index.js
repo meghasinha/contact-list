@@ -14,6 +14,21 @@ app.use(bodyParser.json());
 
 app.use(morgan('common'));
 
+function sanitizeFile(file, cb) {
+    // Define the allowed extension
+    let fileExts = ['png', 'jpg', 'jpeg', 'gif']
+    // Check allowed extensions
+    let isAllowedExt = fileExts.includes(file.originalname.split('.')[1].toLowerCase());
+    // Mime type must be an image
+    let isAllowedMimeType = file.mimetype.startsWith("image/")
+    if (isAllowedExt && isAllowedMimeType) {
+        return cb(null, true) // no errors
+    }
+    else {
+        // pass error msg to callback, which can be displaye in frontend
+        cb('Error: File type not allowed!')
+    }
+}
 
 // Set storage engine
 const storage = multer.diskStorage({
@@ -21,7 +36,13 @@ const storage = multer.diskStorage({
     filename: function (req, file, cb) {
         // null as first argument means no error
         cb(null, Date.now() + '-' + file.originalname )
-    }
+    },
+    limits: {
+       fileSize: 1000000
+   },
+   fileFilter: function (req, file, cb) {
+       sanitizeFile(file, cb);
+   }
 });
 
 app.use('/public', express.static('public'));

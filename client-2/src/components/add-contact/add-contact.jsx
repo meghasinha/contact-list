@@ -50,7 +50,7 @@ export function AddcontactView(props)
      };
 
      const handlecancel = (e) => {
-       window.open('/friends');
+       window.open('/');
      };
 
     return (
