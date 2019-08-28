@@ -8,8 +8,6 @@ const bodyParser= require('body-parser');
 const cors = require('cors');
 const multer = require('multer');
 const app= express();
-const fs = require('fs');
-
 app.use(cors());
 app.use(bodyParser.json());
 
@@ -70,7 +68,7 @@ app.get('/friends', function(req,res)
   });
 });
 //deleting the contact
-app.delete('/', function(req, res) {
+app.delete('/friends/:FirstName', function(req, res) {
   Friend.findOneAndRemove({ FirstName: req.params.FirstName })
   .then(function(friends) {
     if (!friends) {
@@ -78,11 +76,6 @@ app.delete('/', function(req, res) {
     } else {
       res.status(200).send(req.params.FirstName + " was deleted.");
     }
-    let path = req.params.Photo;
-    fs.unlink(path, (err) => {
-      if (err) throw err;
-      console.log('successfully deleted /tmp/hello');
-    });
   })
   .catch(function(err) {
     console.error(err);
