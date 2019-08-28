@@ -8,6 +8,8 @@ const bodyParser= require('body-parser');
 const cors = require('cors');
 const multer = require('multer');
 const app= express();
+const fs = require('fs');
+
 app.use(cors());
 app.use(bodyParser.json());
 
@@ -76,6 +78,10 @@ app.delete('/friends/:FirstName', function(req, res) {
     } else {
       res.status(200).send(req.params.FirstName + " was deleted.");
     }
+    fs.unlink("/"+req.params.Photo, (err) => {
+      if (err) throw err;
+      console.log('successfully deleted /tmp/hello');
+    });
   })
   .catch(function(err) {
     console.error(err);

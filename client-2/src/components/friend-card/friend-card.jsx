@@ -9,8 +9,11 @@ export class FriendCard extends React.Component {
 handleDelete = e => {
    e.preventDefault();
    let firstName = localStorage.getItem('firstname');
+   let photo = localStorage.getItem('photo');
    console.log(firstName);
-   axios.delete(`https://myfriendlist.herokuapp.com/friends/`+ firstName)
+   axios.delete(`https://myfriendlist.herokuapp.com/friends/`,{
+      params: { FirstName: firstName,Photo: photo  }
+    })
    .then(response =>
    {
      const data = response.data;
@@ -44,6 +47,7 @@ handleDelete = e => {
               } } variant="link"><p> <Link to={'/update/'+friend.FirstName}id="button2" ><i className="fa">&#9998;</i></Link></p></Button>
                 <Button  onClick={e=>{
                   localStorage.setItem('firstname', friend.FirstName)
+                  localStorage.setItem('photo', friend.Photo);
                   this.handleDelete(e);
                 } } variant="link"><i className="fa">&#10005;</i></Button>
         </li>
