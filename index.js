@@ -11,16 +11,22 @@ const app= express();
 app.use(cors());
 app.use(bodyParser.json());
 
-app.use(express.static('public'));
+
 app.use(morgan('common'));
 
+
+// Set storage engine
 const storage = multer.diskStorage({
-  filename: function(req, file, cb) {
-    cb(null, file.originalname);
-  }
+    destination: './public/images',
+    filename: function (req, file, cb) {
+        // null as first argument means no error
+        cb(null, Date.now() + '-' + file.originalname )
+    }
 });
 
-var upload = multer({ dest: 'images/', storage: storage });
+app.use(express.static('./public'));
+
+var upload = multer({ storage: storage });
 
 const Friend= Models.Friend;
 mongoose.connect('mongodb+srv://myFlixDBadmin:samkorea@cluster0-u54mz.mongodb.net/contactDB?retryWrites=true',{useNewUrlParser: true});
