@@ -36,7 +36,7 @@ export function AddcontactView(props)
     {
       const data = response.data;
       console.log(data);
-      window.open('/friends');
+      window.open('/');
     })
     .catch(e => {
     console.log('error registering the user')
