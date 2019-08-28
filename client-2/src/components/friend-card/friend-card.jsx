@@ -32,7 +32,7 @@ handleDelete = e => {
     return (
       <ul>
         <li id="display">
-          <span><img className="image" src={process.env.PUBLIC_URL+friend.Photo}/></span>
+          <span><img className="image" src={"/"+friend.Photo}/></span>
            <span> {friend.FirstName + " " +friend.LastName}</span>
             <span> {friend.Email} </span>
               <Button  onClick={()=>{
