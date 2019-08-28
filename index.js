@@ -24,7 +24,7 @@ const storage = multer.diskStorage({
     }
 });
 
-app.use(express.static('./public'));
+app.use('/public', express.static('public'));
 
 var upload = multer({ storage: storage });
 
@@ -96,7 +96,7 @@ app.post('/friends', upload.single('Image'),function(req, res) {
         LastName: req.body.LastName,
         Email: req.body.Email,
         Phone: req.body.Phone,
-        Photo: req.file.originalname
+        Photo: req.file.path
       })
       .then(function(friends) {res.status(201).json(friends) })
       .catch(function(error) {
